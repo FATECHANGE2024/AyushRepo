@@ -1,0 +1,85 @@
+{
+  "name": "Cause",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the cause/NGO/initiative"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the cause"
+    },
+    "cause_type": {
+      "type": "string",
+      "enum": [
+        "ngo",
+        "disaster_relief",
+        "nature_hero"
+      ],
+      "description": "Type of cause"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Cover image for the cause"
+    },
+    "goal_amount": {
+      "type": "number",
+      "description": "Fundraising goal amount"
+    },
+    "raised_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount raised so far"
+    },
+    "donor_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of donors"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the cause is accepting donations"
+    },
+    "organization_name": {
+      "type": "string",
+      "description": "Name of the organization"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "Contact email for the cause"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location where the cause operates"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Urgency level of the cause"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date for fundraising campaign"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "cause_type",
+    "organization_name",
+    "contact_email"
+  ]
+}
