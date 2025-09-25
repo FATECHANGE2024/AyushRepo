@@ -1,0 +1,124 @@
+{
+  "name": "Report",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Brief title of the issue"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the civic issue"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "pothole",
+        "streetlight",
+        "trash",
+        "water_leak",
+        "graffiti",
+        "traffic_signal",
+        "sidewalk",
+        "noise",
+        "other"
+      ],
+      "description": "Type of civic issue"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "acknowledged",
+        "assigned",
+        "in_progress",
+        "resolved",
+        "closed"
+      ],
+      "default": "submitted",
+      "description": "Current status of the report"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Priority level of the issue"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "GPS latitude of the issue location"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "GPS longitude of the issue location"
+    },
+    "address": {
+      "type": "string",
+      "description": "Human readable address"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "URL of uploaded photo"
+    },
+    "voice_note_url": {
+      "type": "string",
+      "description": "URL of voice note recording"
+    },
+    "assigned_department": {
+      "type": "string",
+      "enum": [
+        "public_works",
+        "utilities",
+        "sanitation",
+        "traffic",
+        "parks",
+        "housing"
+      ],
+      "description": "Department responsible for resolution"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Email of staff member assigned"
+    },
+    "resolution_notes": {
+      "type": "string",
+      "description": "Notes from municipal staff about resolution"
+    },
+    "resolved_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when issue was resolved"
+    },
+    "upvotes": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of citizen upvotes"
+    }
+  },
+  "required": [
+    "title",
+    "category",
+    "latitude",
+    "longitude"
+  ],
+  "rls": {
+    "read": {},
+    "write": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
