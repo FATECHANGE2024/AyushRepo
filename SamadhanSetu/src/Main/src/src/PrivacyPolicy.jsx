@@ -1,44 +1,131 @@
+// src/screens/PrivacyPolicy.js
+
 import React from 'react';
-import { ArrowLeft, BookLock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+// For icons, use a React Native icon library
+import Icon from 'react-native-vector-icons/Feather'; 
+// Or use other icon sets like react-native-vector-icons/Ionicons etc.
+
+// Assume you have navigation via React Navigation
+import { useNavigation } from '@react-navigation/native';
 
 export default function PrivacyPolicy() {
-    const navigate = useNavigate();
-    return (
-        <div className="min-h-screen bg-slate-50">
-            <div className="max-w-2xl mx-auto">
-                <div className="p-4 flex items-center gap-4 sticky top-0 bg-white/80 backdrop-blur-md z-10 border-b">
-                    <Button variant="ghost" size="icon" onClick={() => navigate(createPageUrl("Profile"))}>
-                        <ArrowLeft className="w-5 h-5" />
-                    </Button>
-                    <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2"><BookLock /> Privacy Policy</h1>
-                </div>
+  const navigation = useNavigation();
 
-                <div className="p-4 prose lg:prose-xl">
-                    <h2>Our Commitment to Your Privacy</h2>
-                    <p>This Privacy Policy describes how your personal information is collected, used, and shared when you use our application.</p>
-                    
-                    <h3>Personal Information We Collect</h3>
-                    <p>When you use the app, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the app, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the app, and information about how you interact with the app.</p>
-                    
-                    <h3>How Do We Use Your Personal Information?</h3>
-                    <p>We use the information we collect generally to fulfill any services provided through the app. Additionally, we use this information to:
-                        <ul>
-                            <li>Communicate with you;</li>
-                            <li>Screen our orders for potential risk or fraud; and</li>
-                            <li>When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.</li>
-                        </ul>
-                    </p>
-                    
-                    <h3>Sharing Your Personal Information</h3>
-                    <p>We share your Personal Information with third parties to help us use your Personal Information, as described above. We also use Google Analytics to help us understand how our customers use the app.</p>
-                    
-                    <h3>Your Rights</h3>
-                    <p>If you are a European resident, you have the right to access personal information we hold about you and to ask that your personal information be corrected, updated, or deleted.</p>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <ScrollView style={styles.container}>
+      {/* Header bar */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="arrow-left" size={24} color="#000" />
+        </TouchableOpacity>
+        <View style={styles.headerTitleContainer}>
+          <Icon name="lock" size={20} color="#000" style={{ marginRight: 8 }} />
+          <Text style={styles.headerTitle}>Privacy Policy</Text>
+        </View>
+      </View>
+
+      {/* Content */}
+      <View style={styles.content}>
+        <Text style={styles.heading2}>Our Commitment to Your Privacy</Text>
+        <Text style={styles.paragraph}>
+          This Privacy Policy describes how your personal information is collected, used, and shared when you use our application.
+        </Text>
+
+        <Text style={styles.heading3}>Personal Information We Collect</Text>
+        <Text style={styles.paragraph}>
+          When you use the app, we automatically collect certain information about your device, including information about your … (rest of text)  
+        </Text>
+
+        <Text style={styles.heading3}>How Do We Use Your Personal Information?</Text>
+        <Text style={styles.paragraph}>
+          We use the information we collect generally to fulfill any services provided through the app. Additionally, we use this information to:
+        </Text>
+        <View style={styles.list}>
+          <Text style={styles.listItem}>• Communicate with you;</Text>
+          <Text style={styles.listItem}>• Screen our orders for potential risk or fraud; and</Text>
+          <Text style={styles.listItem}>• When in line with the preferences you have shared …</Text>
+        </View>
+
+        <Text style={styles.heading3}>Sharing Your Personal Information</Text>
+        <Text style={styles.paragraph}>
+          We share your Personal Information with third parties to help us use your Personal Information, as described above. We also use analytics to help us understand how our customers use the app.
+        </Text>
+
+        <Text style={styles.heading3}>Your Rights</Text>
+        <Text style={styles.paragraph}>
+          If you are a European resident, you have the right to access personal information we hold about you and to ask that your personal information be corrected, updated, or deleted.
+        </Text>
+      </View>
+    </ScrollView>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8fafc',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#ffffffcc', // translucent
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#d1d5db',
+  },
+  backButton: {
+    padding: 4,
+  },
+  headerTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1f2937',
+  },
+  content: {
+    padding: 16,
+  },
+  heading2: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#111827',
+  },
+  heading3: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 4,
+    color: '#374151',
+  },
+  paragraph: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#4b5563',
+  },
+  list: {
+    marginVertical: 8,
+    paddingLeft: 16,
+  },
+  listItem: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#4b5563',
+    marginBottom: 4,
+  },
+});
