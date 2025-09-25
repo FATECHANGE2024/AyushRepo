@@ -1,0 +1,99 @@
+{
+  "name": "Donation",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number",
+      "description": "Donation amount"
+    },
+    "cause_type": {
+      "type": "string",
+      "enum": [
+        "ngo",
+        "disaster_relief",
+        "nature_hero"
+      ],
+      "description": "Type of cause being supported"
+    },
+    "cause_id": {
+      "type": "string",
+      "description": "ID of the specific cause/NGO/hero"
+    },
+    "cause_name": {
+      "type": "string",
+      "description": "Name of the cause/NGO/hero"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "upi",
+        "card",
+        "netbanking",
+        "wallet"
+      ],
+      "description": "Payment method used"
+    },
+    "transaction_id": {
+      "type": "string",
+      "description": "Payment gateway transaction ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "failed",
+        "refunded"
+      ],
+      "default": "pending",
+      "description": "Donation status"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a recurring donation"
+    },
+    "recurring_frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "yearly"
+      ],
+      "description": "Frequency for recurring donations"
+    },
+    "donor_name": {
+      "type": "string",
+      "description": "Name of the donor"
+    },
+    "donor_email": {
+      "type": "string",
+      "description": "Email of the donor"
+    },
+    "donor_phone": {
+      "type": "string",
+      "description": "Phone number of the donor"
+    },
+    "anonymous": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether donation is anonymous"
+    },
+    "tax_receipt_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether tax receipt has been generated"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes from donor"
+    }
+  },
+  "required": [
+    "amount",
+    "cause_type",
+    "cause_name",
+    "payment_method",
+    "donor_email"
+  ]
+}
