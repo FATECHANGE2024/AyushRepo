@@ -1,223 +1,77 @@
-// CauseForm.tsx
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Switch, StyleSheet, ScrollView, Platform } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+{
+  "name": "Cause",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the cause/NGO/initiative"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the cause"
+    },
+    "cause_type": {
+      "type": "string",
+      "enum": [
+        "ngo",
+        "disaster_relief",
+        "nature_hero"
+      ],
+      "description": "Type of cause"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Cover image for the cause"
+    },
+    "goal_amount": {
+      "type": "number",
+      "description": "Fundraising goal amount"
+    },
+    "raised_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount raised so far"
+    },
+    "donor_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of donors"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the cause is accepting donations"
+    },
+    "organization_name": {
+      "type": "string",
+      "description": "Name of the organization"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "Contact email for the cause"
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location where the cause operates"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium",
+      "description": "Urgency level of the cause"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date for fundraising campaign"
 
-type CauseType = 'ngo' | 'disaster_relief' | 'nature_hero';
-type UrgencyType = 'low' | 'medium' | 'high' | 'urgent';
-
-interface Cause {
-  name: string;
-  description: string;
-  cause_type: CauseType;
-  image_url?: string;
-  goal_amount?: number;
-  raised_amount?: number;
-  donor_count?: number;
-  is_active?: boolean;
-  organization_name: string;
-  contact_email: string;
-  website?: string;
-  location?: string;
-  urgency?: UrgencyType;
-  end_date?: string;
-}
-
-const CauseForm: React.FC = () => {
-  const [cause, setCause] = useState<Cause>({
-    name: '',
-    description: '',
-    cause_type: 'ngo',
-    image_url: '',
-    goal_amount: 0,
-    raised_amount: 0,
-    donor_count: 0,
-    is_active: true,
-    organization_name: '',
-    contact_email: '',
-    website: '',
-    location: '',
-    urgency: 'medium',
-    end_date: '',
-  });
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const handleChange = (key: keyof Cause, value: any) => {
-    setCause({ ...cause, [key]: value });
-  };
-
-  const handleDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === 'ios'); // keep open on iOS
-    if (selectedDate) {
-      const formattedDate = selectedDate.toISOString().split('T')[0]; // YYYY-MM-DD
-      handleChange('end_date', formattedDate);
-    }
-  };
-
-  const handleSubmit = () => {
-    console.log('Cause submitted:', cause);
-    // send to backend API
-  };
-
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.label}>Name</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.name}
-        onChangeText={(text) => handleChange('name', text)}
-      />
-
-      <Text style={styles.label}>Description</Text>
-      <TextInput
-        style={[styles.input, { height: 100 }]}
-        value={cause.description}
-        multiline
-        onChangeText={(text) => handleChange('description', text)}
-      />
-
-      <Text style={styles.label}>Cause Type</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={cause.cause_type}
-          onValueChange={(value) => handleChange('cause_type', value)}
-        >
-          <Picker.Item label="NGO" value="ngo" />
-          <Picker.Item label="Disaster Relief" value="disaster_relief" />
-          <Picker.Item label="Nature Hero" value="nature_hero" />
-        </Picker>
-      </View>
-
-      <Text style={styles.label}>Organization Name</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.organization_name}
-        onChangeText={(text) => handleChange('organization_name', text)}
-      />
-
-      <Text style={styles.label}>Contact Email</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.contact_email}
-        onChangeText={(text) => handleChange('contact_email', text)}
-      />
-
-      <Text style={styles.label}>Image URL</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.image_url}
-        onChangeText={(text) => handleChange('image_url', text)}
-      />
-
-      <Text style={styles.label}>Goal Amount</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={cause.goal_amount?.toString()}
-        onChangeText={(text) =>
-          handleChange('goal_amount', parseFloat(text))
-        }
-      />
-
-      <Text style={styles.label}>Raised Amount</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={cause.raised_amount?.toString()}
-        onChangeText={(text) =>
-          handleChange('raised_amount', parseFloat(text))
-        }
-      />
-
-      <Text style={styles.label}>Donor Count</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={cause.donor_count?.toString()}
-        onChangeText={(text) =>
-          handleChange('donor_count', parseInt(text))
-        }
-      />
-
-      <View style={styles.switchContainer}>
-        <Text style={styles.label}>Is Active?</Text>
-        <Switch
-          value={cause.is_active}
-          onValueChange={(val) => handleChange('is_active', val)}
-        />
-      </View>
-
-      <Text style={styles.label}>Website</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.website}
-        onChangeText={(text) => handleChange('website', text)}
-      />
-
-      <Text style={styles.label}>Location</Text>
-      <TextInput
-        style={styles.input}
-        value={cause.location}
-        onChangeText={(text) => handleChange('location', text)}
-      />
-
-      <Text style={styles.label}>Urgency</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={cause.urgency}
-          onValueChange={(value) => handleChange('urgency', value)}
-        >
-          <Picker.Item label="Low" value="low" />
-          <Picker.Item label="Medium" value="medium" />
-          <Picker.Item label="High" value="high" />
-          <Picker.Item label="Urgent" value="urgent" />
-        </Picker>
-      </View>
-
-      <Text style={styles.label}>End Date</Text>
-      <Button title={cause.end_date || "Select Date"} onPress={() => setShowDatePicker(true)} />
-
-      {showDatePicker && (
-        <DateTimePicker
-          value={cause.end_date ? new Date(cause.end_date) : new Date()}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-        />
-      )}
-
-      <View style={{ marginTop: 20 }}>
-        <Button title="Submit Cause" onPress={handleSubmit} />
-      </View>
-    </ScrollView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: { padding: 16, backgroundColor: '#fff' },
-  label: { fontWeight: 'bold', marginTop: 12 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 8,
-    marginTop: 4,
-  },
-  switchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 12,
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginTop: 4,
-  },
-});
-
-export default CauseForm;
 
